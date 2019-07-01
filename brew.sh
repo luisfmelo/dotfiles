@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
-##
 # Install command-line tools using Homebrew
-##
 
 # Make sure we’re using the latest Homebrew
 brew update
-
 brew upgrade
 
 # Install GNU core utilities (those that come with OS X are outdated)
@@ -60,11 +57,13 @@ brew tap caskroom/versions
 
 # dev
 brew cask install iterm2
-brew cask install sublime-text3
-brew cask install imagealpha
-brew cask install imageoptim
 brew install tmux
+brew install tree
+brew install wget
 brew install cmake
+brew install autoconf
+brew install telnet
+brew install libevent
 brew install ctags
 brew install cscope
 brew install go
@@ -72,19 +71,23 @@ brew install macvim --with-luajit --with-python3
 brew install --HEAD neovim/neovim/neovim
 brew install jq
 
-# java
-# brew cask install java
-# brew install jenv
+# ssl, mongodb, redis and mysql
+brew install openssl
+brew link openssl
+brew install mongodb --with-openssl
+brew install redis
+brew install mysql
+
+# docker
+brew cask install docker
 
 # fun
 brew cask install vlc
 brew cask install skype
 brew cask install spotify
+brew cask install slack
+# brew cask install franz
 
-# ssl and mongodb
-brew install openssl
-brew link openssl
-brew install mongodb --with-openssl
 
 # add services command for easy stop/start of daemons
 brew tap homebrew/services

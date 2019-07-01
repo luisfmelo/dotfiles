@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
-##
-# new setup and configuration
-##
+# new setup and
 CWD=$(pwd)
 CODE_DIR="$HOME/CODE"
-
 
 if ! [ "$(id -u)" = 0  ]; then
     INSTALLCMD="sudo apt-get install"
@@ -20,9 +17,7 @@ fi
 
 # Found Mac OSX
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    #
     # homebrew!
-    #
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
     # then install things
