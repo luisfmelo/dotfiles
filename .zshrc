@@ -112,6 +112,7 @@ alias hs='history | grep'
 alias myip="curl http://ipecho.net/plain; echo"
 alias ctrlc='xclip -selection clipboard -i'
 alias ctrlv='xclip -selection clipboard -o'
+alias genpass='f(){date +%s | sha256sum | base64 | head -c $1 ; echo}; f' . # Ex: $ genpass 32 -> will generate a random 32 chars password
 
 # Git aliases
 alias git-config="code ~/.gitconfig"
