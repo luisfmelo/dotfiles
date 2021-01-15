@@ -1,0 +1,7 @@
+Host github.com
+  HostName github.com
+  IdentityFile ~/.ssh/id_rsa_github
+
+Host kelvininc.bitbucket.org
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/id_rsa_bitbucket_kelvinServerAliveInterval

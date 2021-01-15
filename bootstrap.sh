@@ -2,7 +2,11 @@
 
 # new setup and
 CWD=$(pwd)
-CODE_DIR="$HOME/CODE"
+
+EXT_DIR="$HOME/.my-extensions"
+
+# Install zsh
+#curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh; zsh
 
 if ! [ "$(id -u)" = 0  ]; then
     INSTALLCMD="sudo apt-get install"
@@ -11,8 +15,8 @@ else
 fi
 
 # create code dir if it doesn't exist
-if [ ! -d "$CODE_DIR" ]; then
-    mkdir -p "$CODE_DIR"
+if [ ! -d "$EXT_DIR" ]; then
+    mkdir -p "$EXT_DIR"
 fi
 
 # Found Mac OSX
@@ -44,20 +48,15 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
     # github.com/thebitguru/play-button-itunes-patch
     # disable itunes opening on media keys
-    git clone https://github.com/thebitguru/play-button-itunes-patch "$CODE_DIR"/play-button-itunes-patch
-
+    git clone https://github.com/thebitguru/play-button-itunes-patch "$EXT_DIR"/play-button-itunes-patch
 
     # change to bash 4 (installed by homebrew)
-    BASHPATH=$(brew --prefix)/bin/bash
-    sudo echo "$BASHPATH" >> /etc/shells
-    chsh -s "$BASHPATH" # will set for current user only.
-    echo "Bash version is: (should be 4.x)"
-    echo "$BASH_VERSION" # should be 4.x not the old 3.2.X
+    # BASHPATH=$(brew --prefix)/bin/bash
+    # sudo echo "$BASHPATH" >> /etc/shells
+    # chsh -s "$BASHPATH" # will set for current user only.
+    # echo "Bash version is: (should be 4.x)"
+    # echo "$BASH_VERSION" # should be 4.x not the old 3.2.X
     # Later, confirm iterm settings aren't conflicting.
-
-    # fix for iterm and terminal.app to use ctrl-h correctly for libterm and neovim
-    infocmp "$TERM" | sed 's/kbs=^[hH]/kbs=\\177/' > "$TERM.ti"
-    tic "$TERM.ti"
 
 
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
@@ -157,47 +156,59 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
             silversearcher-ag \
             -y --reinstall
     fi
-
 fi
 
 cd $CWD
- github.com/jamiew/git-friendly
-# the `push` command which copies the github compare URL to my clipboard is heaven
-# bash < <( curl https://raw.github.com/jamiew/git-friendly/master/install.sh)
-
 
 # github.com/rupa/z   - oh how i love you
-# git clone https://github.com/rupa/z.git "$CODE_DIR/z"
-# chmod +x "$CODE_DIR/z/z.sh"
+# git clone https://github.com/rupa/z.git "$EXT_DIR/z"
+# chmod +x "$EXT_DIR/z/z.sh"
 # consider reusing your current .z file if possible. it's painful to rebuild :)
 # z hooked up in .bash_profile
-
-# Base16 Shell
-git clone https://github.com/chriskempson/base16-shell.git "$HOME/.config/base16-shell"
-
-# Base Material Theme
-git clone https://github.com/kristijanhusak/vim-hybrid-material "$CODE_DIR/vim-hybrid-material"
-cp "$CODE_DIR/vim-hybrid-material/base16-material/base16-material.dark.sh" "$HOME/.config/base16-shell"
 
 
 # don't let ssh timeout locally
 if [ -d "$HOME/.ssh" ]; then
-echo "ServerAliveInterval 120" >> "$HOME/.ssh/config"
-chmod 644 "$HOME/.ssh/config"
+    echo "ServerAliveInterval 120" >> "$HOME/.ssh/config"
+    chmod 644 "$HOME/.ssh/config"
 else
-mkdir -p "$HOME/.ssh"
-chmod 700 "$HOME/.ssh"
-echo "ServerAliveInterval 120" >> "$HOME/.ssh/config"
-chmod 644 "$HOME/.ssh/config"
+    mkdir -p "$HOME/.ssh"
+    chmod 700 "$HOME/.ssh"
+    echo "ServerAliveInterval 120" >> "$HOME/.ssh/config"
+    chmod 644 "$HOME/.ssh/config"
 fi
 
-
 # install patched fonts for vim statusline
-git clone https://github.com/powerline/fonts "$CODE_DIR/fonts"
-$CODE_DIR/fonts/install.sh
+git clone https://github.com/powerline/fonts "$EXT_DIR/fonts"
+$EXT_DIR/fonts/install.sh
 
 # for the c alias (syntax highlighted cat)
 #sudo easy_install Pygments
+
+# Configure SSH
+###############################
+# Personal keys
+ssh-keygen -f "$CWD/../.ssh/id_rsa_github" -t rsa -b 4096 -C "luismelo7@gmail.com"
+#ssh-keygen -f "$CWD/../.ssh/id_rsa_gitlab" -t rsa -b 4096 -C "name.gitlab@gmail.com"
+#ssh-keygen -f "$CWD/../.ssh/id_rsa_bitbucket" -t rsa -b 4096 -C "name.bitbucket@gmail.com"
+
+# Organization Keys
+#ssh-keygen -f "$CWD/../.ssh/id_rsa_github_companyName" -t rsa -b 4096 -C "name.github@company.com"
+#ssh-keygen -f "$CWD/../.ssh/id_rsa_gitlab_companyName" -t rsa -b 4096 -C "name.gitlab@company.com"
+ssh-keygen -f "$CWD/../.ssh/id_rsa_bitbucket_kelvin" -t rsa -b 4096 -C "luis.melo@kelvininc.com"
+
+# Add the personal keys
+ssh-add $CWD/../.ssh/id_rsa_github
+# ssh-add $CWD/../.ssh/id_rsa_gitlab
+# ssh-add $CWD/../.ssh/id_rsa_bitbucket
+
+# Add the organisation keys
+# ssh-add $CWD/../.ssh/id_rsa_github_companyName
+# ssh-add $CWD/../.ssh/id_rsa_gitlab_companyName
+ssh-add $CWD/../.ssh/id_rsa_bitbucket_kelvin
+
+###############################
+
 
 
 # symlinks!
