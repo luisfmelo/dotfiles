@@ -6,7 +6,7 @@ CWD=$(pwd)
 EXT_DIR="$HOME/.my-extensions"
 
 # Install zsh
-#curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh; zsh
+curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh; zsh
 
 if ! [ "$(id -u)" = 0  ]; then
     INSTALLCMD="sudo apt-get install"
@@ -24,27 +24,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # homebrew!
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-#    sudo rm -rf /Library/Developer/CommandLineTools
-#    sudo xcode-select --install
+    sudo rm -rf /Library/Developer/CommandLineTools
+    sudo xcode-select --install
 
     # then install things
-#    ./brew.sh
+    ./brew.sh
 
-  # TODO: DELETE
-  ###########
-    # Fonts
-    brew tap homebrew/cask-fonts
-    fonts=(
-      font-source-code-pro
-      font-roboto
-    )
-    brew install --cask "${fonts[@]}"
-
-
-    # Remove outdated versions from the cellar
-    brew cleanup
-    brew doctor
-  ###########
 
     # github.com/thebitguru/play-button-itunes-patch
     # disable itunes opening on media keys
@@ -208,8 +193,6 @@ ssh-add $CWD/../.ssh/id_rsa_github
 ssh-add $CWD/../.ssh/id_rsa_bitbucket_kelvin
 
 ###############################
-
-
 
 # symlinks!
 #   put/move git credentials into ~/.gitconfig.local
