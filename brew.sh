@@ -8,21 +8,21 @@ brew upgrade
 
 # Install GNU core utilities (those that come with OS X are outdated)
 # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
-brew tap homebrew/dupes
+brew install screen
 brew install coreutils
 brew install binutils
-brew install findutils --with-default-names
+brew install findutils
 brew install diffutils
 
 brew install moreutils
-brew install gnu-sed --with-default-names
-brew install gnu-tar --with-default-names
+brew install gnu-sed
+brew install gnu-tar
 brew install gawk
 brew install gnutls
-brew install grep --with-default-names
+brew install grep
 brew install screen
 brew install watch
-brew install wdiff --with-gettext
+brew install wdiff
 
 
 # Install Bash 4
@@ -31,32 +31,24 @@ brew install bash
 brew install bash-completion
 
 brew install grc
-brew install wget --with-iri
-
-# Install more recent versions of some OS X tools
-brew install vim --override-system-vi --with-luajit --with-python3
+brew install wget
 
 # Install other useful binaries
 brew install the_silver_searcher
 brew install git
 brew install bzr
-brew install hg
-brew install imagemagick --with-webp
 brew install pv
 brew install rename
 brew install tree
-brew install zopfli
-brew install ffmpeg --with-libvpx
 brew install git-tracker
 brew install ssh-copy-id
-brew install reattach-to-user-namespace --with-wrap-pbcopy-and-pbpaste
 
 # Install native apps
-brew install caskroom/cask/brew-cask
-brew tap caskroom/versions
+brew install homebrew/brew-cask
+brew tap homebrew/cask-versions
 
 # dev
-brew cask install iterm2
+brew install --cask iterm2
 brew install tmux
 brew install tree
 brew install wget
@@ -67,39 +59,36 @@ brew install libevent
 brew install ctags
 brew install cscope
 brew install go
-brew install macvim --with-luajit --with-python3
-brew install --HEAD neovim/neovim/neovim
 brew install jq
 
 # ssl, mongodb, redis and mysql
 brew install openssl
 brew link openssl
-brew install mongodb --with-openssl
 brew install redis
-brew install mysql
 
 # docker
-brew cask install docker
+brew install --cask docker
 
 # fun
-brew cask install vlc
-brew cask install skype
-brew cask install spotify
-brew cask install slack
-# brew cask install franz
-
+brew install --cask vlc
+brew install --cask spotify
+brew install --cask slack
+# brew install --cask franz
+brew install --cask google-chrome
+brew install --cask brave-browser
 
 # add services command for easy stop/start of daemons
 brew tap homebrew/services
 
 # Fonts
-brew tap caskroom/fonts
+brew tap homebrew/cask-fonts
 fonts=(
 	font-source-code-pro
 	font-roboto
 )
-brew cask install "${fonts[@]}"
+brew install --cask "${fonts[@]}"
 
 
 # Remove outdated versions from the cellar
 brew cleanup
+brew doctor

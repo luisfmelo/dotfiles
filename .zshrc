@@ -1,3 +1,4 @@
+# ~/.zshrc
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/go/bin:$PATH
 
@@ -71,7 +72,7 @@ ZSH_THEME="honukai"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 HIST_STAMPS="yyyy-mm-dd"
-  
+
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
@@ -80,13 +81,13 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( 
+plugins=(
   # produtivity
-  colored-man-pages colorize copydir copyfile cp extract history sudo urltools web-search z 
-  
+  colored-man-pages colorize copydir copyfile cp extract history sudo urltools web-search z
+
   # programming
   git node npm kubectl docker dotenv golang django python
-  
+
   # ZSH
   zsh-autoduggestions zsh-history-substring-search zsh-syntax-highlighing
 )
@@ -172,7 +173,7 @@ function perf {
 
 pdfcompress ()
 {
-   gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true -dColorImageDownsampleType=/Bicubic -dColorImageResolution=144 -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=144 -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=144 -sOutputFile=$1.compressed.pdf $1; 
+   gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true -dColorImageDownsampleType=/Bicubic -dColorImageResolution=144 -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=144 -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=144 -sOutputFile=$1.compressed.pdf $1;
 }
 
 
@@ -180,7 +181,7 @@ decode_base64_url() {
   local len=$((${#1} % 4))
   local result="$1"
   if [ $len -eq 2 ]; then result="$1"'=='
-  elif [ $len -eq 3 ]; then result="$1"'=' 
+  elif [ $len -eq 3 ]; then result="$1"'='
   fi
   echo "$result" | tr '_-' '/+' | openssl enc -d -base64
 }
