@@ -165,17 +165,18 @@ main() {
     done
 
     # symlinks dirs
-    ln -fs ~/.vim ~/.nvim && ln -fs ~/.vimrc ~/.nvimrc
-    # tmux
-    ln -fs ~/code/dotfiles/.tmux ~/.tmux
+    ln -fs ~/dotfiles/.ssh-config ~/.ssh/config
+    rm ../.ssh-config
+
+
     # local bin dir
-    if [ ! -d "$HOME/bin" ]; then
-        ln -fs ~/code/dotfiles/bin ~/bin
-    fi
+    # if [ ! -d "$HOME/bin" ]; then
+    #     ln -fs ~/dotfiles/bin ~/bin
+    # fi
     # google cloud sdk
-    if [ ! -d "$HOME/.google-cloud-sdk" ]; then
-        ln -fs ~/code/dotfiles/.google-cloud-sdk ~/.google-cloud-sdk
-    fi
+    # if [ ! -d "$HOME/.google-cloud-sdk" ]; then
+    #     ln -fs ~/dotfiles/.google-cloud-sdk ~/.google-cloud-sdk
+    # fi
 
 }
 
