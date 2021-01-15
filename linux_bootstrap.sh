@@ -29,8 +29,6 @@ eval "$APTCMD" install \
     libpcre3-dev \
     libssl-dev \
     mercurial \
-    neovim \
-    nodejs \
     software-properties-common \
     python-dev \
     python-setuptools \

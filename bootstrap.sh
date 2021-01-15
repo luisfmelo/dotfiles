@@ -18,10 +18,29 @@ fi
 # Found Mac OSX
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # homebrew!
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+#    sudo rm -rf /Library/Developer/CommandLineTools
+#    sudo xcode-select --install
 
     # then install things
-    ./brew.sh
+#    ./brew.sh
+
+  # TODO: DELETE
+  ###########
+    # Fonts
+    brew tap homebrew/cask-fonts
+    fonts=(
+      font-source-code-pro
+      font-roboto
+    )
+    brew install --cask "${fonts[@]}"
+
+
+    # Remove outdated versions from the cellar
+    brew cleanup
+    brew doctor
+  ###########
 
     # github.com/thebitguru/play-button-itunes-patch
     # disable itunes opening on media keys
@@ -55,7 +74,6 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
             sudo add-apt-repository ppa:neovim-ppa/unstable -y
             sudo apt-get update
         fi
-
 
         # Install stuff
         eval "$INSTALLCMD" \
@@ -128,8 +146,6 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
             libpcre3-dev \
             libssl-dev \
             mercurial \
-            nodejs \
-            neovim \
             python-software-properties \
             python-dev \
             python-setuptools \
@@ -140,35 +156,12 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
             vim-nox \
             silversearcher-ag \
             -y --reinstall
-
     fi
 
-    # install neovim python support for 2/3
-    sudo pip install neovim
-    sudo pip3 install neovim
-
 fi
 
-
-# install google sdk
-# cd "$CODE_DIR"
-# curl https://sdk.cloud.google.com | bash
-# install kubectl
-# $CODE_DIR/google-cloud-sdk/bin/gcloud components install kubectl
 cd $CWD
-
-# add node
-if [ -d "$HOME/.nvm" ]; then
-    # clean up .bashrc if node has been installed before
-    sed '/NVM_DIR/d' $HOME/.bashrc
-fi
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
-source $HOME/.nvm/nvm.sh
-nvm install node
-nvm use node
-
-
-# github.com/jamiew/git-friendly
+ github.com/jamiew/git-friendly
 # the `push` command which copies the github compare URL to my clipboard is heaven
 # bash < <( curl https://raw.github.com/jamiew/git-friendly/master/install.sh)
 
@@ -204,7 +197,7 @@ git clone https://github.com/powerline/fonts "$CODE_DIR/fonts"
 $CODE_DIR/fonts/install.sh
 
 # for the c alias (syntax highlighted cat)
-sudo easy_install Pygments
+#sudo easy_install Pygments
 
 
 # symlinks!
