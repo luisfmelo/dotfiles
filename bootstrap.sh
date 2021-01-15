@@ -19,11 +19,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # homebrew!
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    # sudo rm -rf /Library/Developer/CommandLineTools
-    # sudo xcode-select --install
+    sudo rm -rf /Library/Developer/CommandLineTools
+    sudo xcode-select --install
 
     # then install things
-    # ./brew.sh
+    ./brew.sh
 
 
     # github.com/thebitguru/play-button-itunes-patch

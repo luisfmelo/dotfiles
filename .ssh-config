@@ -10,10 +10,4 @@ Host github.com
 Host kelvininc.bitbucket.org
   HostName bitbucket.org
   User git
-  IdentityFile ~/.ssh/id_rsa_bitbucket_kelvinServerAliveInterval
-ServerAliveInterval 120
-ServerAliveInterval 120
-ServerAliveInterval 120
-ServerAliveInterval 120
-ServerAliveInterval 120
-ServerAliveInterval 120
+  IdentityFile ~/.ssh/id_rsa_bitbucket_kelvin
