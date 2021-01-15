@@ -1,27 +1,31 @@
+# ~/.zshrc
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/go/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/luismelo-MBP/.oh-my-zsh"
-
-# Add Path For GO
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-export PATH=${PATH}:$GOBIN
+export ZSH=$HOME/.oh-my-zsh
 
 # Path for SonarQube & SunarScanner
 export PATH=$PATH:~/Downloads/SonarScanner/bin
 export PATH=$PATH:~/Downloads/SonarQube/bin
 
+# Path for python cli applications (using pipx)
+export PATH=$PATH:/Users/luismelo/.local/bin
+
+# Path for Go
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+export PATH=${PATH}:$GOBIN
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="honukai"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
@@ -42,7 +46,7 @@ ZSH_THEME="honukai"
 # export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
+# DISABLE_MAGIC_FUNCTIONS=true
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -73,8 +77,8 @@ HIST_STAMPS="yyyy-mm-dd"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
@@ -87,8 +91,6 @@ plugins=(
   # ZSH
   zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting
 )
-
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -112,7 +114,9 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 ##################
 # ALIAS
@@ -149,13 +153,8 @@ alias ip:public="wget https://ipinfo.io/ip -qO -"
 alias sonarqube="~/Downloads/SonarQube/bin/macosx-universal-64/sonar.sh"
 alias sonarscanner="~/Downloads/SonarScanner/bin/sonar-scanner"
 
-# Decode JWT Payload
-alias jwt-decode="decode_jwt 2"
-
-alias addkey='eval $(ssh-agent) && ssh-add'
-
 ##################
-# Helper Functions
+# Functions
 ##################
 function cd {
    builtin cd $@ && ls
@@ -172,7 +171,8 @@ function perf {
   curl -o /dev/null -s -w "Time to connect: %{time_connect} s\nRequest duration: %{time_starttransfer} s\nTotal Time: %{time_total} s\n" "$1"
 }
 
-pdfcompress (){
+pdfcompress ()
+{
    gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true -dColorImageDownsampleType=/Bicubic -dColorImageResolution=144 -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=144 -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=144 -sOutputFile=$1.compressed.pdf $1;
 }
 
@@ -189,3 +189,10 @@ decode_base64_url() {
 decode_jwt(){
    decode_base64_url $(echo -n $2 | cut -d "." -f $1) | jq .
 }
+
+# Decode JWT Payload
+alias jwt-decode="decode_jwt 2"
+
+alias addkey='eval $(ssh-agent) && ssh-add'
+
+# source $ZSH/oh-my-zsh.sh

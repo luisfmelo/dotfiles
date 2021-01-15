@@ -6,13 +6,8 @@ CWD=$(pwd)
 EXT_DIR="$HOME/.my-extensions"
 
 # Install zsh
-curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh; zsh
-
-if ! [ "$(id -u)" = 0  ]; then
-    INSTALLCMD="sudo apt-get install"
-else
-    INSTALLCMD="apt-get install"
-fi
+curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+chsh -s $(which zsh)
 
 # create code dir if it doesn't exist
 if [ ! -d "$EXT_DIR" ]; then
@@ -24,11 +19,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # homebrew!
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    sudo rm -rf /Library/Developer/CommandLineTools
-    sudo xcode-select --install
+    # sudo rm -rf /Library/Developer/CommandLineTools
+    # sudo xcode-select --install
 
     # then install things
-    ./brew.sh
+    # ./brew.sh
 
 
     # github.com/thebitguru/play-button-itunes-patch
@@ -45,105 +40,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
 
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-    # Found Linux
-
-    if [ -f /etc/lsb-release  ]; then
-        # Found Ubuntu
-        #. /etc/lsb-release
-
-        # Add PPAs
-        if [ "$(id -u)" = 0  ]; then
-            add-apt-repository ppa:neovim-ppa/unstable -y
-        else
-            sudo add-apt-repository ppa:neovim-ppa/unstable -y
-            sudo apt-get update
-        fi
-
-        # Install stuff
-        eval "$INSTALLCMD" \
-            bash-completion \
-            build-essential \
-            bzr \
-            checkinstall \
-            cmake \
-            curl \
-            exuberant-ctags \
-            git \
-            binutils \
-            bison \
-            gawk \
-            gcc \
-            grc \
-            libc6-dev \
-            libpcre3 \
-            libpcre3-dev \
-            libssl-dev \
-            mercurial \
-            neovim \
-            nodejs \
-            python-software-properties \
-            python-dev \
-            python-setuptools \
-            python-pip \
-            python3-dev \
-            python3-setuptools \
-            python3-pip \
-            silversearcher-ag \
-            vim-nox \
-            -y --reinstall
-
-    elif [ -f /etc/os-release  ]; then
-        # Found Debian
-        #. /etc/os-release
-
-        # add add apt-repositories
-        echo "deb http://ppa.launchpad.net/neovim-ppa/unstable/ubuntu vivid main" | sudo tee -a /etc/apt/sources.list > /dev/null
-        sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 55F96FCF8231B6DD
-        sudo apt-get update
-        eval "$INSTALLCMD" software-properties-common -y
-
-        # add PPAs
-        if [ "$(id -u)" = 0  ]; then
-            curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
-        else
-            curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
-        fi
-
-        # Install stuff
-        sudo apt-get install \
-            bash-completion \
-            binutils \
-            bison \
-            build-essential \
-            bzr \
-            bzip2 \
-            checkinstall \
-            cmake \
-            curl \
-            exuberant-ctags \
-            gawk \
-            git \
-            gcc \
-            grc \
-            libc6-dev \
-            libpcre3 \
-            libpcre3-dev \
-            libssl-dev \
-            mercurial \
-            python-software-properties \
-            python-dev \
-            python-setuptools \
-            python-pip \
-            python3-dev \
-            python3-setuptools \
-            python3-pip \
-            vim-nox \
-            silversearcher-ag \
-            -y --reinstall
-    fi
+    echo "NOT SUPPORTED"
+    return 1
 fi
 
-cd $CWD
+cd "$CWD"
 
 # github.com/rupa/z   - oh how i love you
 # git clone https://github.com/rupa/z.git "$EXT_DIR/z"
@@ -194,7 +95,32 @@ ssh-add $CWD/../.ssh/id_rsa_bitbucket_kelvin
 
 ###############################
 
+
+# Configure ZSH
+###############################
+# Get Theme
+wget https://raw.githubusercontent.com/oskarkrawczyk/honukai-iterm/master/honukai.zsh-theme && mv honukai.zsh-theme ~/.oh-my-zsh/custom/themes/honukai.zsh-theme
+
+# Get Plugins
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+###############################
+
 # symlinks!
 #   put/move git credentials into ~/.gitconfig.local
 #   http://stackoverflow.com/a/13615531/89484
-./createSymLinks.sh
+# ./createSymLinks.sh  THIS IS NOT WORKING PROPERLY I DO NOT KNOW WHY
+
+
+# Create Symlinks
+###############################
+current_time=$(date "+%Y.%m.%d-%H.%M.%S")
+
+mv ~/.zshrc ~/.zshrc.old."$current_time"
+ln -s ~/dotfiles/.zshrc ~/.zshrc
+
+mv ~/.ssh/config ~/.ssh/config.old."$current_time"
+ln -s ~/dotfiles/.ssh-config ~/.ssh/config
+###############################
