@@ -17,7 +17,36 @@ export PATH=$PATH:~/Downloads/SonarQube/bin
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="honukai"
+ZSH_THEME="spaceship"  #"honukai"
+
+# https://github.com/denysdovhan/spaceship-prompt/blob/master/docs/Options.md
+SPACESHIP_PROMPT_ORDER=(
+  time          # Time stamps section
+  user          # Username section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  # node          # Node.js section
+  # golang        # Go section
+  # docker        # Docker section
+  aws           # Amazon Web Services section
+  # gcloud        # Google Cloud Platform section
+  kubectl       # Kubectl context section
+  terraform     # Terraform workspace section
+  battery       # Battery level and status
+  jobs          # Background jobs indicator
+#  exit_code     # Exit code section
+  line_sep
+  char          # Prompt character
+)
+
+SPACESHIP_RPROMPT_ORDER=()
+
+SPACESHIP_PROMPT_SEPARATE_LINE=true
+SPACESHIP_PROMPT_ADD_NEWLINE=true
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_DIR_TRUNC_REPO=false
+SPACESHIP_EXIT_CODE_SHOW=false
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -176,6 +205,10 @@ pdfcompress (){
    gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true -dColorImageDownsampleType=/Bicubic -dColorImageResolution=144 -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=144 -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=144 -sOutputFile=$1.compressed.pdf $1;
 }
 
+pdfmerge () {
+   gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=$1 -dBATCH ${@:2}
+}
+
 
 decode_base64_url() {
   local len=$((${#1} % 4))
@@ -188,4 +221,16 @@ decode_base64_url() {
 
 decode_jwt(){
    decode_base64_url $(echo -n $2 | cut -d "." -f $1) | jq .
+}
+
+# Change aws profile
+function aws-switch() {
+    case ${1} in
+        "")
+            export AWS_PROFILE=""
+            ;;
+        *)
+            export AWS_PROFILE="${1}"
+            ;;
+    esac
 }
